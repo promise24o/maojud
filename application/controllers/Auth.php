@@ -8,7 +8,7 @@ class Auth extends CI_Controller
 	{
 		$data['page_title']  = "Login";
 		$this->load->view('Layouts/header', $data);
-		$this->load->view('Pages/index');
+		$this->load->view('index');
 		$this->load->view('Layouts/footer');
 	}
 

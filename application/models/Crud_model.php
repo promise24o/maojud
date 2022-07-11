@@ -12,6 +12,7 @@ class Crud_model extends CI_Model{
             $row = $query->row();
             $this->session->set_userdata('admin_login', TRUE);
             $this->session->set_userdata('admin_id', $row->admin_id);
+            $this->session->set_userdata('admin_name', $row->admin_name);
             $this->session->set_userdata('admin_encrypted_id', $row->encrypted_id);            
             $this->session->set_userdata('email', $row->admin_email);
             $this->session->set_userdata('logged_in', TRUE);
