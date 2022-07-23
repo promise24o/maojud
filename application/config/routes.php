@@ -52,5 +52,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller']    = 'auth';
 $route['confirm-login']         = 'auth/confirm_login';
 $route['logout']                = 'auth/logout';
+$route['(:any)']        = 'product/index/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

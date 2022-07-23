@@ -37,4 +37,154 @@ class Crud_model extends CI_Model{
         return $image_url;
     }
 
+    public function getAllLandingPages(){
+        $this->db->order_by('id', 'desc'); 
+        $query = $this->db->get('landing_pages'); 
+        return $query->result_array();
+    }
+
+    public function getPageName($id){
+        $this->db->where('slug', $id);
+        $query = $this->db->get('landing_pages'); 
+        return $query->row()->title;
+    }
+
+    public function getPage2($id){
+        $this->db->where('slug', $id);
+        $query = $this->db->get('landing_pages'); 
+        return $query->row_array();
+    }
+
+    public function getPage($id){
+        $this->db->where('encrypted_id', $id);
+        $query = $this->db->get('landing_pages'); 
+        return $query->row_array();
+    }
+
+    public function getProducts($id){
+        $this->db->where('landing_page', $id);
+        $query = $this->db->get('products'); 
+        return $query->result_array();
+    }
+
+    public function getThreeProducts($id){
+        // $this->db->order_by('id', 'desc');
+        $this->db->where('landing_page', $id);
+        $query = $this->db->get('products')->result_array(); 
+        for($i=0; $i<sizeof($query); $i++){
+            if($i>0 && $i<4){
+                $result[] = $query[$i];
+            }
+        }
+        return $result;  
+    }
+
+    public function getFifthProduct($id){
+        // $this->db->order_by('id', 'desc');
+        $this->db->where('landing_page', $id);
+        $query = $this->db->get('products')->result_array(); 
+        for($i=0; $i<sizeof($query); $i++){
+            if($i == 4){
+                $result[] = $query[$i];
+            }
+        }
+        return $result;  
+    }
+
+    public function getSixthProduct($id){
+        // $this->db->order_by('id', 'desc');
+        $this->db->where('landing_page', $id);
+        $query = $this->db->get('products')->result_array(); 
+        for($i=0; $i<sizeof($query); $i++){
+            if($i == 5){
+                $result[] = $query[$i];
+            }
+        }
+        return $result;  
+    }
+
+    public function getSeventhProduct($id){
+        // $this->db->order_by('id', 'desc');
+        $this->db->where('landing_page', $id);
+        $query = $this->db->get('products')->result_array(); 
+        for($i=0; $i<sizeof($query); $i++){
+            if($i == 6){
+                $result[] = $query[$i];
+            }
+        }
+        return $result;  
+    }
+
+    public function getFirstProduct($id){
+        // $this->db->order_by('id', 'desc');
+        $this->db->limit(1);
+        $this->db->where('landing_page', $id);
+        $query = $this->db->get('products'); 
+        return $query->row_array();
+    }
+
+    public function getTotalProducts(){
+        $query = $this->db->get('products'); 
+        return $query->num_rows();
+    }
+
+    public function getTotalAdmin(){
+        $query = $this->db->get('admin'); 
+        return $query->num_rows();
+    }
+
+    public function getAllCategories(){
+        $this->db->order_by('id', 'desc');
+        $query = $this->db->get('categories'); 
+        return $query->result_array();
+    }
+
+    public function getNoLandingPages($id){
+        $this->db->where('category', $id); 
+        $query = $this->db->get('landing_pages'); 
+        return $query->num_rows();
+    }
+
+    public function getNoHeroPages($id){
+        $this->db->where('category', $id); 
+        $query = $this->db->get('hero_pages'); 
+        return $query->num_rows();
+    }
+
+    public function getTotalLandingPages(){
+        $query = $this->db->get('landing_pages'); 
+        return $query->num_rows();
+    }
+
+    public function getThemeName($id){
+        $name = "";
+        if($id == 1){
+            return $name = "Generic";
+        }elseif($id == 2){
+            return $name = "Light";
+        }elseif($id == 3){
+            return $name = "Dark";
+        }elseif($id ==4){
+            return $name = "Glow";
+        }else{
+            return $name = "Neutral";
+        }
+    }
+
+    public function getTheme($id){
+        $theme = "";
+        $this->db->where('slug', $id);
+        $query = $this->db->get('landing_pages')->row()->theme;
+        if($query == 1){
+            return 'Landing/generic';
+        }elseif($query == 2){
+            return 'Landing/light';
+        }elseif($query == 3){
+            return 'Landing/dark';
+        }elseif($query == 4){
+            return 'Landing/glow';
+        }else{
+            return 'Landing/neutral';
+        }
+    }
 }

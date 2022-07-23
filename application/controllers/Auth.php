@@ -12,6 +12,7 @@ class Auth extends CI_Controller
 		$this->load->view('Layouts/footer');
 	}
 
+
 	function confirm_login()
 	{
 		$email    = $this->input->post('email', TRUE);
