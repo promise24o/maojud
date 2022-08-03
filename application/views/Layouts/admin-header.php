@@ -104,6 +104,11 @@
                             <span class="nav-text">Create Landing Page</span>
                         </a>                        
                     </li>
+                    <li><a class="ai-icon" href="<?= base_url('admin/create_hero_page') ?>" aria-expanded="false">
+                            <i class="flaticon-381-file-1"></i>
+                            <span class="nav-text">Create Hero Page</span>
+                        </a>                        
+                    </li>
                 </ul>
             </div>
         </div>

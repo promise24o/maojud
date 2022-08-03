@@ -22,7 +22,7 @@
                                   <div class="row shadow p-3 mb-5 bg-white rounded ">
                                       <div class="form-group col-md-12">
                                           <label class="text-black font-w500">Landing Page Title</label>
-                                          <input required id="landing_title" name="landing_title" type="text" class="form-control">
+                                          <input required id="hero_title" name="hero_title" type="text" class="form-control">
                                       </div>
 
                                       <div class="form-group col-md-2">
@@ -274,7 +274,7 @@
                                               <td><?= $page['last_updated'] ?></td>
                                               <td><?= $this->crud_model->getThemeName($page['theme']) ?></td>
                                               <td><a href="<?= base_url('/' . $page['slug']) ?>">Click Here</a></td>
-                                              <td><a href="<?= base_url('admin/page_details/' . $page['encrypted_id']) ?>"><i class="flaticon-381-view-2"></i> View Page</a></td>
+                                              <td><a href="<?= base_url('admin/page_details/' . $page['encrypted_id']) ?>"><i class="flaticon-381-view-2"></i> Edit Page</a></td>
                                           </tr>
                                       <?php endforeach; ?>
                               </table>

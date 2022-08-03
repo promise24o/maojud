@@ -73,6 +73,16 @@
            $('#slug').val('https://www.moajud.net/'+slug);
         }
     })
+
+    $(function () {
+        $('#hero_title').keyup(updateSlug);
+        $('#hero_title').keydown(updateSlug);
+        function updateSlug() {
+            var title =  $('#hero_title').val();
+            var slug = title.replace(/\s+/g, '_').toLowerCase();
+           $('#slug').val('https://www.moajud.net/'+slug);
+        }
+    })
 </script>
 
 </body>

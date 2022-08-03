@@ -18,6 +18,10 @@ class Product extends CI_Controller
 		$this->load->view($theme, $data);
 	}
 
+	public  function testpage(){
+		$this->load->view('Hero/hero2');
+	}
+
 
 	
 

@@ -43,15 +43,46 @@ class Crud_model extends CI_Model{
         return $query->result_array();
     }
 
+    public function getAllHeroPages(){
+        $this->db->order_by('id', 'desc'); 
+        $query = $this->db->get('hero_pages'); 
+        return $query->result_array();
+    }
+
     public function getPageName($id){
         $this->db->where('slug', $id);
         $query = $this->db->get('landing_pages'); 
-        return $query->row()->title;
+        if($query->num_rows() > 0){
+            return $query->row()->title;
+        }
+
+        $this->db->where('slug', $id);
+        $query = $this->db->get('hero_pages'); 
+        if($query->num_rows() > 0){
+            return $query->row()->title;
+        }
+        
     }
 
     public function getPage2($id){
         $this->db->where('slug', $id);
         $query = $this->db->get('landing_pages'); 
+        if($query->num_rows() > 0){
+            return $query->row_array();
+        }
+        
+
+        $this->db->where('slug', $id);
+        $query = $this->db->get('hero_pages'); 
+        if($query->num_rows() > 0){
+            return $query->row_array();
+        }
+       
+    }
+
+    public function getHeroPage($id){
+        $this->db->where('encrypted_id', $id);
+        $query = $this->db->get('hero_pages'); 
         return $query->row_array();
     }
 
@@ -115,6 +146,13 @@ class Crud_model extends CI_Model{
         return $result;  
     }
 
+    public function getProduct($id){
+        $this->db->limit(1);
+        $this->db->where('landing_page', $id);
+        $query = $this->db->get('products'); 
+        return $query->row_array();
+    }
+
     public function getFirstProduct($id){
         // $this->db->order_by('id', 'desc');
         $this->db->limit(1);
@@ -156,6 +194,17 @@ class Crud_model extends CI_Model{
         return $query->num_rows();
     }
 
+    public function getHeroThemeName($id){
+        $name = "";
+        if($id == 1){
+            return $name = "Hero Theme 1";
+        }elseif($id == 2){
+            return $name = "Hero Theme 2";
+        }else{
+            return $name = "Hero Theme 3";
+        }
+    }
+
     public function getThemeName($id){
         $name = "";
         if($id == 1){
@@ -174,17 +223,34 @@ class Crud_model extends CI_Model{
     public function getTheme($id){
         $theme = "";
         $this->db->where('slug', $id);
-        $query = $this->db->get('landing_pages')->row()->theme;
-        if($query == 1){
-            return 'Landing/generic';
-        }elseif($query == 2){
-            return 'Landing/light';
-        }elseif($query == 3){
-            return 'Landing/dark';
-        }elseif($query == 4){
-            return 'Landing/glow';
-        }else{
-            return 'Landing/neutral';
+        $query = $this->db->get('landing_pages');
+        if($query->num_rows() > 0){
+            $query = $query->row()->theme;
+            if($query == 1){
+                return 'Landing/generic';
+            }elseif($query == 2){
+                return 'Landing/light';
+            }elseif($query == 3){
+                return 'Landing/dark';
+            }elseif($query == 4){
+                return 'Landing/glow';
+            }else{
+                return 'Landing/neutral';
+            }
         }
+
+        $this->db->where('slug', $id);
+        $query = $this->db->get('hero_pages');;
+        if($query->num_rows() > 0){
+            $query = $query->row()->theme; 
+            if($query == 1){
+                return 'Hero/hero1';
+            }elseif($query == 2){
+                return 'Hero/hero2';
+            }else{
+                return 'Hero/hero3';
+            }
+        }
+       
     }
 }

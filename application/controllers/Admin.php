@@ -41,6 +41,17 @@ class Admin extends CI_Controller
 	}
 
 
+	public function create_hero_page()
+	{
+        if ($this->session->userdata('admin_login') != TRUE)
+			redirect(base_url(), 'refresh');
+
+		$data['page_title']  = "Hero Page Builder";
+		$this->load->view('Layouts/admin-header', $data);
+		$this->load->view('Admin/create-hero-page');
+		$this->load->view('Layouts/admin-footer');
+	}
+
 	public function create_landing_page()
 	{
         if ($this->session->userdata('admin_login') != TRUE)
@@ -66,6 +77,24 @@ class Admin extends CI_Controller
 
         $this->session->set_flashdata('flash_message', 'Category Created Successfully');
         redirect(base_url('admin/categories'));
+	}
+
+	public function hero_page_details($id = "")
+	{
+        if ($this->session->userdata('admin_login') != TRUE)
+			redirect(base_url(), 'refresh');
+
+        if($id == ""){
+            $this->session->set_flashdata('flash_error', 'An Error has Occured');
+            redirect(base_url('admin/dashboard')); 
+        }
+
+		$data['page_title']  = "Hero Page Details";
+        $data['page']        = $this->crud_model->getHeroPage($id);
+
+		$this->load->view('Layouts/admin-header', $data);
+		$this->load->view('Admin/hero-page-details');
+		$this->load->view('Layouts/admin-footer');
 	}
 
 	public function page_details($id = "")
@@ -215,12 +244,109 @@ class Admin extends CI_Controller
             
         }else{
             $data['page_title']  = "Landing Page Builder";
-            $this->session->set_flashdata('flash_error', 'Landing Page Created Successfully');
+            $this->session->set_flashdata('flash_error', 'Error Creating Landing Page');
             $this->load->view('Layouts/admin-header', $data);
             $this->load->view('Admin/create-page');
             $this->load->view('Layouts/admin-footer');
             
         }
+       
+    }
+
+
+    public function confirm_create_hero_page(){
+        if ($this->session->userdata('admin_login') != TRUE)
+        redirect(base_url(), 'refresh');
+
+        $config = array(
+            array(
+                'field' => 'hero_title',
+                'label' => 'Hero Page Title',
+                'rules' => 'required|is_unique[hero_pages.title]'
+            ),
+            array(
+                'field' => 'name',
+                'label' => 'Product Name',
+                'rules' => 'required'
+            ),
+            array(
+                'field' => 'desc',
+                'label' => 'Product Description',
+                'rules' => 'required|callback_check_desc'
+            )
+        );
+        $this->form_validation->set_rules($config);
+        if ($this->form_validation->run()) {
+            $landing_page_id        =   random_string('alnum', 100);
+            $data['title']          =   $this->input->post('hero_title'); 
+            $data['category']       =   $this->input->post('hero_category'); 
+            $data['slug']           =    str_replace(' ', '-', strtolower(trim($this->input->post('hero_title')))); 
+            $data['encrypted_id']   =   $landing_page_id; 
+            $data['created_by']     =   $this->session->userdata('admin_name');
+            $data['last_updated']   =   date('F jS, Y | h:i:A');
+            $data['theme']          =   $this->input->post('hero_theme');
+
+            //Insert Hero Page 
+            $this->db->insert('hero_pages', $data);
+            
+            $data2['encrypted_id']     =   random_string('alnum', 100);
+            $data2['name']           =   $this->input->post('name');
+            $data2['landing_page']   =   $landing_page_id;
+            $data2['description']   =   $this->input->post('desc');
+
+            //Insert Landing Page 
+            $this->db->insert('products', $data2); 
+            $insert_id = $this->db->insert_id();
+
+            move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/product_image/'.$insert_id.'.jpg');
+
+            $this->session->set_flashdata('flash_message', 'Hero Page Created Successfully');
+            redirect(base_url('admin/create_hero_page'));
+        }else{
+            $data['page_title']  = "Landing Page Builder";
+            $this->session->set_flashdata('flash_error', 'Error Creating Hero Page');
+            $this->load->view('Layouts/admin-header', $data);
+            $this->load->view('Admin/create-hero-page');
+            $this->load->view('Layouts/admin-footer');
+            
+        }
+       
+    }
+
+    public function update_hero_page($id=""){
+        if ($this->session->userdata('admin_login') != TRUE)
+        redirect(base_url(), 'refresh');
+        
+        if($id == ""){
+            $this->session->set_flashdata('flash_error', 'An Error has Occured');
+            redirect(base_url('admin/dashboard')); 
+        }
+
+            $data['title']          =   $this->input->post('hero_title'); 
+            $data['category']       =   $this->input->post('category'); 
+            $data['slug']           =    str_replace(' ', '-', strtolower(trim($this->input->post('hero_title')))); 
+            $data['created_by']     =   $this->session->userdata('admin_name');
+            $data['last_updated']   =   date('F jS, Y | h:i:A');
+            $data['theme']          =   $this->input->post('hero_theme');
+
+            //Insert Hero Page 
+            $this->db->where('encrypted_id', $id);
+            $this->db->update('hero_pages', $data);
+            
+            $product_id             =   $this->input->post('id');
+            $data2['name']          =   $this->input->post('name');
+            $data2['description']   =   $this->input->post('desc');
+
+            //Insert Product 
+            $this->db->where('id', $product_id);
+            $this->db->update('products', $data2); 
+            $insert_id = $product_id;
+
+            move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/product_image/'.$insert_id.'.jpg');
+
+            $this->session->set_flashdata('flash_message', 'Hero Page Updated Successfully');
+            redirect(base_url('admin/hero_page_details/'.$id));
+     
        
     }
 
