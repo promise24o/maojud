@@ -527,16 +527,30 @@
                                                 <?php if($product_main['has_color'] == 1): ?>
                                                 <div class="col-lg-6">
                                                     <div class="single-input-item">
-                                                        <input name="color" type="text" placeholder="Enter Color Name"
-                                                            required="">
+                                                        <select class="form-control" name="color" required>
+                                                            <option value="">Select Color</option>
+                                                            <?php
+                                                                $colors = explode(',', $product_main['colors']);
+                                                                foreach($colors as $color):
+                                                            ?>
+                                                            <option><?= $color ?></option>
+                                                            <?php endforeach; ?>
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <?php endif; ?>
                                                 <?php if($product_main['has_size'] == 1): ?>
                                                 <div class="col-lg-6">
                                                     <div class="single-input-item">
-                                                        <input name="size" type="text" placeholder="Enter Product Size"
-                                                            required="">
+                                                        <select class="form-control" name="size" required>
+                                                            <option value="">Select Size</option>
+                                                            <?php
+                                                                $sizes = explode(',', $product_main['sizes']);
+                                                                foreach($sizes as $size):
+                                                            ?>
+                                                            <option><?= $size ?></option>
+                                                            <?php endforeach; ?>
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <?php endif; ?>

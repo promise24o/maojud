@@ -362,15 +362,19 @@ class Admin extends CI_Controller
             //Insert Hero Page 
             $this->db->insert('hero_pages', $data);
             
-            $data2['encrypted_id']     =   random_string('alnum', 100);
+            $data2['encrypted_id']      =   random_string('alnum', 100);
             $data2['category']          =   $hero_cat;
-            $data2['type']          =   'hero';
-            $data2['name']           =   $this->input->post('name');
-            $data2['code']          =   $this->input->post('code');
-            $data2['price']           =   $this->input->post('price');
-            $data2['sold_out']           =   $this->input->post('sold_out');
-            $data2['landing_page']   =   $landing_page_id;
-            $data2['description']   =   $this->input->post('desc');
+            $data2['type']              =   'hero';
+            $data2['name']              =   $this->input->post('name');
+            $data2['code']              =   $this->input->post('code');
+            $data2['price']             =   $this->input->post('price');
+            $data2['sold_out']          =   $this->input->post('sold_out');
+            $data2['has_size']          =   $this->input->post('size');
+            $data2['has_color']         =   $this->input->post('color');
+            $data2['colors']            =   $this->input->post('colors');
+            $data2['sizes']             =   $this->input->post('sizes');
+            $data2['landing_page']      =   $landing_page_id;
+            $data2['description']       =   $this->input->post('desc');
 
             //Insert Landing Page 
             $this->db->insert('products', $data2); 

@@ -4585,6 +4585,14 @@ only screen and (max-width: 767.98px) {
     margin-top: 5px;
 }
 
+.single-input-item select {
+    color: #666666;
+    border: 1px solid #ccc;
+    width: 100%;
+    font-size: 14px;
+    background: #f7f7f7;
+}
+
 .single-input-item input,
 .single-input-item textarea {
     color: #666666;

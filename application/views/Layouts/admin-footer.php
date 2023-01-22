@@ -57,6 +57,7 @@
     $(function () {
         $('.desc').keyup(updateCount);
         $('.desc').keydown(updateCount);
+
         function updateCount() {
             var cs = 400 - $(this).val().length;
             let characters = $('.characters');
@@ -67,23 +68,25 @@
     $(function () {
         $('#landing_title').keyup(updateSlug);
         $('#landing_title').keydown(updateSlug);
+
         function updateSlug() {
-            var title =  $('#landing_title').val();
+            var title = $('#landing_title').val();
             var slug = title.replace(/\s+/g, '_').toLowerCase();
-           $('#slug').val('https://www.moajud.net/'+slug);
+            $('#slug').val('https://www.moajud.net/' + slug);
         }
     })
 
     $(function () {
         $('#hero_title').keyup(updateSlug);
         $('#hero_title').keydown(updateSlug);
+
         function updateSlug() {
-            var title =  $('#hero_title').val();
+            var title = $('#hero_title').val();
             var slug = title.replace(/\s+/g, '_').toLowerCase();
-           $('#slug').val('https://www.moajud.net/'+slug);
+            $('#slug').val('https://www.moajud.net/' + slug);
         }
     })
-    $(".add-product-img").click(function(e){
+    $(".add-product-img").click(function (e) {
         e.preventDefault();
         $(".product-details").prepend(`<div class="form-group col-md-6">
             <label class="text-black font-w500">Product Image</label>
@@ -96,11 +99,31 @@
         </div>`);
     })
 
-     $(document).on('click', '.remove_product_img', function(event) {
+    $("#has_color").change(function (e) {
+        e.preventDefault();
+        var status = $("#has_color :selected").val();
+        if(status == 1){
+            $("#colors").removeClass('d-none');
+        }else{
+            $("#colors").addClass('d-none');
+        }
+    })
+
+    $("#has_size").change(function (e) {
+        e.preventDefault();
+        var status = $("#has_size :selected").val();
+        if(status == 1){
+            $("#sizes").removeClass('d-none');
+        }else{
+            $("#sizes").addClass('d-none');
+        }
+    })
+
+    $(document).on('click', '.remove_product_img', function (event) {
         event.preventDefault();
         let row_item = $(this).parent();
         row_item.remove();
-     });
+    });
 </script>
 
 </body>

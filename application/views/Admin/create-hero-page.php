@@ -168,19 +168,21 @@
                                       </div>
                                       <div class="form-group col-md-6">
                                           <label class="text-black font-w500">Has Color</label>
-                                          <select class="form-control" name="color" required>
+                                          <select id="has_color" class="form-control" name="color" required>
                                             <option value="">Select Option</option>
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
                                           </select>
+                                          <input required placeholder="Enter Colors Seperated by Comma(,)" type="text"  id="colors" name="colors" class="d-none form-control">
                                       </div>
                                       <div class="form-group col-md-6">
                                           <label class="text-black font-w500">Has Size</label>
-                                          <select class="form-control" name="size" required>
+                                          <select id="has_size" class="form-control" name="size" required>
                                             <option value="">Select Option</option>
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
                                           </select>
+                                            <input required placeholder="Enter Sizes Seperated by Comma(,)" type="text" id="sizes" name="sizes" class="d-none form-control">
                                       </div>
                                      
                                   </div>
