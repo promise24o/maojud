@@ -126,8 +126,21 @@
                                   </div>
                               </div>
 
-                              <div class="products">
-                                  <div class="row shadow p-3 mb-5 bg-white rounded ">
+                              <div class="products shadow p-3 mb-5 bg-white rounded">
+                                    <button class="btn btn-primary mb-4 add-product-img">
+                                        <i class="fa fa-plus-circle"></i> Add Product Image 
+                                    </button>
+                                  <div class="row product-details">
+                                     <div class="form-group col-md-6">
+                                         <label class="text-black font-w500">Product Image</label>
+                                         <div class="custom-file">
+                                             <input required type="file" accept="image/png" name="userfile[]"
+                                                 class="custom-file-input">
+                                             <label class="custom-file-label">Choose Product Image</label>
+                                         </div>
+                                         <span class="fs-12 font-w600">Minimum Product Image Size should be 661px ×
+                                             661px</span>
+                                     </div>
                                       <div class="form-group col-md-6">
                                           <label class="text-black font-w500">Product Name</label>
                                           <input required name="name" value="<?= set_value('name'); ?>" type="text"
@@ -139,15 +152,6 @@
                                               value="<?= set_value('desc'); ?>" class="form-control desc"></textarea>
                                           <span class="fs-12 font-w600">Brief Product Description should not be more
                                               than 400 Characters</span>
-                                      </div>
-                                      <div class="form-group col-md-6">
-                                          <div class="custom-file">
-                                              <input required type="file" accept="image/png" name="userfile"
-                                                  class="custom-file-input">
-                                              <label class="custom-file-label">Choose Product Image</label>
-                                          </div>
-                                          <span class="fs-12 font-w600">Minimum Product Image Size should be 661px ×
-                                              661px</span>
                                       </div>
                                       <div class="form-group col-md-6">
                                           <label class="text-black font-w500">Product Code</label>
@@ -162,6 +166,23 @@
                                           <label class="text-black font-w500">Sold Out</label>
                                           <input required type="number" name="sold_out" class="form-control">
                                       </div>
+                                      <div class="form-group col-md-6">
+                                          <label class="text-black font-w500">Has Color</label>
+                                          <select class="form-control" name="color" required>
+                                            <option value="">Select Option</option>
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                          </select>
+                                      </div>
+                                      <div class="form-group col-md-6">
+                                          <label class="text-black font-w500">Has Size</label>
+                                          <select class="form-control" name="size" required>
+                                            <option value="">Select Option</option>
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                          </select>
+                                      </div>
+                                     
                                   </div>
                               </div>
 

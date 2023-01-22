@@ -83,6 +83,24 @@
            $('#slug').val('https://www.moajud.net/'+slug);
         }
     })
+    $(".add-product-img").click(function(e){
+        e.preventDefault();
+        $(".product-details").prepend(`<div class="form-group col-md-6">
+            <label class="text-black font-w500">Product Image</label>
+            <div class="custom-file">
+                <input required type="file" accept="image/png" name="userfile[]" class="custom-file-input">
+                <label class="custom-file-label">Choose Product Image</label>
+            </div>
+            <span class="fs-12 font-w600">Minimum Product Image Size should be 661px × 661px</span>
+            <a class="remove_product_img text-danger" style="cursor:pointer">Remove</a>
+        </div>`);
+    })
+
+     $(document).on('click', '.remove_product_img', function(event) {
+        event.preventDefault();
+        let row_item = $(this).parent();
+        row_item.remove();
+     });
 </script>
 
 </body>

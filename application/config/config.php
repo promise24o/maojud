@@ -23,7 +23,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/maojud/';
+$config['base_url']         = 'http://localhost/maojud/';
+
+$config['site_name']        = "Maojud Online Store";
+$config['site_email']       = "contact@maojud.net";
+$config['site_address']     = "FEVZİ ÇAKMAK C KIRCAALİ M KAYALIK S NO 26/3/10 BURSA BURSA 16100";
+$config['site_phone']       = "+90 322 3599586";
+$config['site_project']     = "PR";
 
 /*
 |--------------------------------------------------------------------------
@@ -43,26 +49,7 @@ $config['protocol']='smtp';
 | SMTP configuration to send email to user just after submitting quiz
 | This feature is under testing version, We are not responsible if it does not work with any devices or browsers.
 */
-
-// smtp hostname eg. smtp.gmail.com
-$config['smtp_hostname'] = 'ssl://thirtyfour.qservers.net';
-// smtp username
-$config['smtp_username'] = 'info@alphadiellaltd.com';
-// smtp password
-$config['smtp_password'] = 'Info@Password';
-// smtp outgoing port. eg for gmail its 465, outlook 587, yahoo 465 for other contact your mailing administrator
-$config['smtp_port'] = 465;
-// smtp timeout default 5 seconds
-$config['smtp_timeout'] = '5';
-// smtp tls
-$config['starttls'] = TRUE;
-// new line
-$config['newline'] = "\r\n";
-// email message content text of html. 
-// In html email make sure you don't have any relative links or relative image paths otherwise they will not work.
-$config['smtp_mailtype'] = "text/html";
-
-
+ 
 $config['index_page'] = '';
 
 /*

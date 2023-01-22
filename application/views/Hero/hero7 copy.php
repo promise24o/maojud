@@ -8,10 +8,14 @@
     <meta name="description" content="meta description">
     <!--=== Favicon ===-->
     <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url() ?>assets/images/favicon.png">
-    <title> Maoju Online Store <?= $page_title ?> </title>
+    <title>Maoju Online Store
+        <?= $page_title ?>
+    </title>
     <!--=== All Plugins CSS ===-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+        integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="<?= base_url() ?>assets/hero/3/css/plugins.css" rel="stylesheet">
     <!--=== All Vendor CSS ===-->
     <link href="<?= base_url() ?>assets/hero/3/css/vendor.css" rel="stylesheet">
@@ -19,63 +23,9 @@
     <link href="<?= base_url() ?>assets/hero/3/css/style.css" rel="stylesheet">
     <!-- Modernizer JS -->
     <script src="<?= base_url() ?>assets/hero/3/js/modernizr-2.8.3.min.js"></script>
-    <style>
-        .detail-action {
-            position: fixed;
-            width: 100%;
-            background: #fff;
-            z-index: 99999999;
-            bottom: 0px;
-            padding: 0;
-            margin: 0;
-            border-top: 1px solid #ccc;
-            left: 0;
-        }
-
-        .cart {
-            margin: 10px 0 10px 0;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-        }
-
-        .whatsapp-link {
-            border-radius: 5px;
-            background: #5ffb7b !important;
-            background: linear-gradient(180deg, #5ffb7b 0%, #22d340 100%) !important;
-            font-size: 2.5rem;
-            width: 20% !important;
-            display: inline-block !important;
-            cursor: pointer !important;
-            text-align: center !important;
-            text-align: center;
-            color: #fff;
-            padding: 7px 0;
-            line-height: 25px;
-            vertical-align: middle;
-            display: flex !important;
-            justify-content: center;
-        }
-
-        .btn-order-now {
-            background:linear-gradient( 135deg , #E41D92 0%, #FF7A00 100.64%);
-            display: block;
-            width: 75% !important;
-            padding: 4px 10px !important;
-            font-size: 18px !important;
-            border-radius: 5px !important;
-            line-height: 0;
-            margin-top: 0 !important;
-            box-shadow: none;
-            padding: 0px;
-            color: #ffffff;
-            font-weight: 400;
-        }
-    </style>
-
 </head>
 
-<body style="background: #ffffff">
+<body style="background: #FFFFFF">
     <!-- Start Header Area -->
     <header class="header-area">
         <!-- main header start -->
@@ -162,7 +112,7 @@
                             <li class=""><a href="#">Home</a> </li>
                             <li class=""><a href="#products">Similar Products</a> </li>
                             <li class=" "><a href="#">Shop</a> </li>
-                            <li><a href="#" data-toggle="modal" data-target="#contactUsModal">Contact us</a></li>
+                            <li><a href="#">Contact us</a></li>
                         </ul>
                     </nav>
                     <!-- mobile menu navigation end -->
@@ -172,10 +122,8 @@
                 <div class="offcanvas-widget-area">
                     <div class="off-canvas-contact-widget">
                         <ul>
-                            <li><i class="fa fa-mobile"></i> <a href="#"><?=  $this->config->item('site_phone'); ?></a>
-                            </li>
-                            <li><i class="fa fa-envelope-o"></i> <a
-                                    href="#"><?=  $this->config->item('site_email'); ?></a> </li>
+                            <li><i class="fa fa-mobile"></i> <a href="#">0123456789</a> </li>
+                            <li><i class="fa fa-envelope-o"></i> <a href="#">info@maojud.net</a> </li>
                         </ul>
                     </div>
                     <div class="off-canvas-social-widget"> <a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
@@ -188,75 +136,62 @@
         </div>
     </aside>
     <!-- off-canvas menu end -->
-    <?php
-            $product_main = $this->crud_model->getProduct($page['encrypted_id']);
-            $similar_products = $this->crud_model->getHeroSimilarProducts($page['encrypted_id']);
-        ?>
     <!-- main wrapper start -->
+    <?php
+            $product            = $this->crud_model->getProduct($page['encrypted_id']);
+            $similar_products   = $this->crud_model->getHeroSimilarProducts($page['encrypted_id']);
+        ?>
     <main>
         <!-- hero slider section start -->
         <section class="">
             <div class="container">
                 <div class="row py-5 align-items-center">
-                    <div class="col-lg-12">
-                        <div class="hero-slider-active slick-arrow-style slick-arrow-style_hero slick-dot-style">
-                            <?php
-                                for($i=0; $i<$page['images']; $i++):
-                            ?>
-                            <!-- single slider item start -->
-
-                            <div class="hero-single-slide">
-                                <div class="hero-slider-item">
-                                    <div class="row align-items-center">
-                                        <div class="col-md-6">
-                                            <div class="hero-slider-content slide-1">
-                                                < <h5 class="slide-subtitle" style="color: #000000;">Top Selling!</h5>
-                                                    <h2 class="slide-title"
-                                                        style="color: #000000; font-family:Poppins;">
-                                                        <?= $product_main['name'] ?></h2>
-                                                    <p class="slide-desc" style="color: #000000;">
-                                                        <?= $product_main['description'] ?></p>
-                                                    <div class="price mt-4">
-                                                        <h3 style="color: #000000;">
-                                                            <?= '$'.number_format($product_main['price'],2) ?>
-                                                        </h3>
-                                                    </div>
-                                                    <a href="#" data-toggle="modal" data-target="#show-cart-modal"
-                                                        class="btn shop-now"
-                                                        style="background: linear-gradient( 135deg , #E41D92 0%, #FF7A00 100.64%); border: 2px solid; color:#FFFFFF; border-radius: 30px;">SHOP
-                                                        NOW <i class="fa fa-arrow-right"></i></a>
-                                                    <p class="items-sold" style="color: #000000;">* No. of Item(s) Sold:
-                                                        <?= $product_main['sold_out'] ?></p>
-                                            </div>
+                    <div class="col-lg-6">
+                        <div class="hero-slider-active">
+                            <div class="">
+                                <div class="">
+                                    <div class="hero-slider-content slide-1">
+                                        <h5 class="slide-subtitle" style="color: #000000;">Top Selling!</h5>
+                                        <h2 class="slide-title" style="color: #000000; font-family:Poppins;">
+                                            <?= $product['name'] ?></h2>
+                                        <p class="slide-desc" style="color: #000000;"><?= $product['description'] ?></p>
+                                        <div class="price mt-4">
+                                            <h3 style="color: #000000;"><?= '$'.number_format($product['price'],2) ?>
+                                            </h3>
                                         </div>
-                                        <div class="col-md-6 d-flex justify-content-center">
-                                            <img class="img-fluid" width="100%"
-                                                src="<?= $this->crud_model->get_image_url('product', $product_main['id'].'_'.$i) ?>">
-                                        </div>
+                                        <a href="#" data-id="<?= $product['encrypted_id'] ?>"
+                                            data-name="<?= $product['name'] ?>"
+                                            data-description="<?= $product['description'] ?>"
+                                            data-price="<?= '$'.number_format($product['price'],2) ?>"
+                                            data-sold="<?= $product['sold_out'] ?>"
+                                            data-image="<?= $this->crud_model->get_image_url('product', $product['id']) ?>"
+                                            class="btn shop-now"
+                                            style="background: linear-gradient( 135deg , #E41D92 0%, #FF7A00 100.64%); border: 2px solid; color:#FFFFFF; border-radius: 30px;">SHOP
+                                            NOW <i class="fa fa-arrow-right"></i></a>
+                                        <p class="items-sold" style="color: #000000;">* No. of Item(s) Sold:
+                                            <?= $product['sold_out'] ?></p>
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- single slider item end -->
-                            <?php endfor; ?>
-
                         </div>
                     </div>
-
+                    <div class="col-lg-6 position-relative">
+                        <img class="img-fluid position-absolute" style="top: 20%; left: 0; right:0;"
+                            src="<?= base_url() ?>assets/hero/3/img/product/1.png">
+                        <div class="circle"
+                            style="width: 400px; height: 400px; border-radius: 100%;background: linear-gradient( 135deg , #E41D92 20%, #9341FF, #FF7A00 70.64%); margin: 50px 20px 0px">
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
         <!-- our product area start -->
-        <!-- hero slider section end -->
-        <?php if($similar_products): ?>
-        <!-- our product area start -->
-        <section id="products" class="our-product section-padding">
+        <div class="our-product">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <div class="section-title text-center">
-                            <h1 class="title text-white">Similar Products</h1>
-                            <p class="sub-title text-white">Other users also checked out this products here.</p>
+                        <div class="section-title">
+                            <h2 class="title">Similar Products</h2>
                         </div>
                     </div>
                 </div>
@@ -265,13 +200,14 @@
                         <div class="product-carousel-4 mbn-50 slick-row-15 slick-arrow-style shadow-hover h-100">
                             <?php foreach($similar_products as $product): ?>
                             <!-- product single item start -->
-                            <div class="product-item mb-50 bg-white bg-white">
+                            <div class="product-item mb-50 bg-white bg-white" style="height: 400px; position:relative">
                                 <div class="product-thumb"> <a
                                         href="<?= base_url('/' . $this->crud_model->getPageSlug($product['landing_page'])) ?>">
-                                        <img width="220" height="250"
-                                            src="<?= $this->crud_model->get_image_url('product', $product['id'].'_'."0") ?>"
+                                        <img width="220" height="150"
+                                            src="<?= $this->crud_model->get_image_url('product', $product['id']) ?>"
                                             alt="">
-                                    </a> </div>
+                                    </a>
+                                </div>
                                 <div class="product-content">
                                     <h4 class="product-name text-break">
                                         <a
@@ -280,16 +216,20 @@
                                             <?= $this->crud_model->getCategoryName($product['category']) ?></p>
                                     </h4>
 
-                                    <div class="price-box">
+                                    <div class="price-box"
+                                        style="position: absolute; top: 70%; left: 0; right: 0; margin-left: auto; margin-right: auto;">
                                         <p class="price-regular mb-2">
-                                            <strong>Price:</strong>$<?= number_format($product['price'],2) ?></p>
-                                        <p class="price-regular"><strong>Sold Out:
-                                            </strong><?= $product['sold_out'] ?>
+                                            <strong>Price:</strong>$<?= number_format($product['price'],2) ?>
+                                        </p>
+                                        <p class="price-regular"><strong>Sold Out: </strong><?= $product['sold_out'] ?>
                                         </p>
                                     </div>
 
                                     <div class="product-action-link">
-                                        <a href="<?= base_url('/' . $this->crud_model->getPageSlug($product['landing_page'])) ?>"
+                                        <a data-id="<?= $product['encrypted_id'] ?>" data-name="<?= $product['name'] ?>"
+                                            data-price="<?= '$'.number_format($product['price'],2) ?>"
+                                            data-sold="<?= $product['sold_out'] ?>"
+                                            data-image="<?= $this->crud_model->get_image_url('product', $product['id']) ?>"
                                             class="shop-now" data-toggle="tooltip" title="Shop Now"><i
                                                 class="ion-bag"></i></a>
                                     </div>
@@ -301,14 +241,12 @@
                     </div>
                 </div>
             </div>
-        </section>
-        <!-- our product area end -->
-        <?php endif; ?>
+        </div>
         <!-- our product area end -->
 
         <!-- hero slider section end -->
         <!-- service features start -->
-        <section class="service-policy-area section-padding" style="margin-bottom: 2rem;">
+        <section class="service-policy-area section-padding">
             <div class="container">
                 <div class="row mtn-30">
                     <!-- single policy item start -->
@@ -354,16 +292,7 @@
     </main>
     <!-- main wrapper end -->
     <!-- Scroll to top start -->
-    <div class="detail-action">
-        <div class="cart">
-            <button href="#" data-toggle="modal" data-target="#show-cart-modal" class="btn btn-order-now shop-now">SHOP
-                NOW FOR <?= '$'.number_format($product_main['price'],2) ?></button>
-            <a href="https://wa.me/905527389901/?text=Hello%2C%20I%20am%20contacting%20you%20for%20this%20product%20<?= urlencode(current_url())?>"
-                class="whatsapp-link">
-                <i class="fab fa-whatsapp"></i>
-            </a>
-        </div>
-    </div>
+    <div class="scroll-top not-visible"> <i class="fa fa-angle-up"></i> </div>
     <!-- Scroll to Top End -->
     <!--=======================Javascript============================-->
     <!--=== All Vendor Js ===-->
@@ -372,6 +301,7 @@
     <script src="<?= base_url() ?>assets/hero/3/js/plugins.js"></script>
     <!--=== Active Js ===-->
     <script src="<?= base_url() ?>assets/hero/3/js/active.js"></script>
+
     <!-- Contact Us modal start -->
     <div class="modal" id="contactUsModal">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -386,8 +316,7 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="contact-message">
-                                        <h2 class="contact-title mb-1">Always Keep Touch With Us</h2>
-                                        <p class="mb-2">Fill the form below to get started.</p>
+                                        <h2 class="contact-title">tell us about your product</h2>
                                         <form action="<?= base_url('send-message') ?>" method="post"
                                             class="contact-form">
                                             <div class="row">
@@ -427,20 +356,23 @@
                                     <div class="contact-info pt-0">
                                         <h2 class="contact-title">contact us</h2>
                                         <p>
-                                            Send Us a message. We'll keep your email address private and get back to you
-                                            quickly.
+                                            Claritas est etiam processus dynamicus, qui sequitur
+                                            mutationem consuetudium lectorum. Mirum est notare quam
+                                            littera gothica, quam nunc putamus parum claram anteposuerit
+                                            litterarum formas human.
                                         </p>
                                         <ul>
                                             <li>
-                                                <i class="fa fa-fax"></i> Address :
-                                                <?= $this->config->item('site_address') ?>
+                                                <i class="fa fa-fax"></i> Address : No 40 Baria Sreet 133/2
+                                                NewYork City
                                             </li>
-                                            <li><i class="fa fa-phone"></i> <?= $this->config->item('site_email') ?>
-                                            </li>
-                                            <li><i class="fa fa-envelope"></i>
-                                                <?= $this->config->item('site_phone') ?></li>
+                                            <li><i class="fa fa-phone"></i> info@yourdomain.com</li>
+                                            <li><i class="fa fa-envelope-o"></i> +88013245657</li>
                                         </ul>
-
+                                        <div class="working-time">
+                                            <h3>Working Hours</h3>
+                                            <p class="pb-0"><span>Monday – Saturday:</span>08AM – 22PM</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -454,7 +386,7 @@
     <!-- Contact Us modal end -->
 
     <!-- Quick view modal start -->
-    <div class="modal" id="show-cart-modal">
+    <div class="modal" id="showNowModal">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -467,9 +399,7 @@
                             <div class="col-lg-5">
                                 <div class="product-large-slider mb-20">
                                     <div class="pro-large-img img-zoom">
-                                        <img id="product_image"
-                                            src="<?= $this->crud_model->get_image_url('product', $product_main['id'].'_0') ?>"
-                                            alt="product thumb" />
+                                        <img id="product_image" src="" alt="product thumb" />
                                     </div>
 
                                 </div>
@@ -479,25 +409,24 @@
                             </div>
                             <div class="col-lg-7">
                                 <div class="product-details-des">
-                                    <h3 class="pro-det-title" id="product_name"><?= $product_main['name'] ?></h3>
+                                    <h3 class="pro-det-title" id="product_name">Primitive Mens Premium Shoes</h3>
                                     <div class="pro-review">
-                                        <span>Sold Out: </span><span><?= $product_main['sold_out'] ?></span>
+                                        <span>Sold Out: </span><span id="sold_out"></span>
                                     </div>
                                     <div class="price-box">
-                                        <span class="regular-price"
-                                            id="product_price">$<?= number_format($product_main['price'],2) ?></span>
+                                        <span class="regular-price" id="product_price">$70.00</span>
                                     </div>
                                     <div class="availability mb-10 mt-2">
                                         <h5 class="cat-title">Availability:</h5>
                                         <span>In Stock</span>
                                     </div>
-                                    <p id="product_desc"><?= $product_main['description'] ?></p>
+                                    <p id="product_desc">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                                        diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed
+                                        diam voluptua.</p>
                                     <div class="form mb-5">
                                         <form action="<?= base_url('confirm-order') ?>" method="post">
-                                            <input type="hidden" name="product_id"
-                                                value="<?= $product_main['encrypted_id'] ?>" required="">
-                                            <input type="hidden" name="project"
-                                                value="<?=  $this->config->item('site_project'); ?>" required>
+                                            <input type="hidden" name="product_id" id="product_id" required="">
+                                            <input type="hidden" name="project" value="<?=  $this->config->item('site_project'); ?>" required>
                                             <div class="single-input-item">
                                                 <input type="text" name="fullname" placeholder="Fullname" required="">
                                             </div>
@@ -507,10 +436,7 @@
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <div class="single-input-item">
-                                                        <input name="phone" id="tel" type="tel" placeholder="Phone"
-                                                            required="">
-                                                        <span style="font-size: x-small;">Include Country Code (e.g
-                                                            +1)</span>
+                                                        <input name="phone" type="tel" placeholder="Phone" required="">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
@@ -519,28 +445,6 @@
                                                             required="">
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-12">
-                                                    <div class="single-input-item">
-                                                        <textarea required placeholder="Enter Delivery Address"
-                                                            name="address"></textarea>
-                                                    </div>
-                                                </div>
-                                                <?php if($product_main['has_color'] == 1): ?>
-                                                <div class="col-lg-6">
-                                                    <div class="single-input-item">
-                                                        <input name="color" type="text" placeholder="Enter Color Name"
-                                                            required="">
-                                                    </div>
-                                                </div>
-                                                <?php endif; ?>
-                                                <?php if($product_main['has_size'] == 1): ?>
-                                                <div class="col-lg-6">
-                                                    <div class="single-input-item">
-                                                        <input name="size" type="text" placeholder="Enter Product Size"
-                                                            required="">
-                                                    </div>
-                                                </div>
-                                                <?php endif; ?>
                                             </div>
 
                                             <div class="single-input-item">
@@ -566,12 +470,33 @@
     </div>
     <!-- Quick view modal end -->
 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/js/all.min.js"
         integrity="sha512-8pHNiqTlsrRjVD4A/3va++W1sMbUHwWxxRPWNyVlql3T+Hgfd81Qc6FC5WMXDC+tSauxxzp1tgiAvSKFu1qIlA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <script>
+    $(document).ready(function() {
+        $('.shop-now').on('click', function() {
+            $('#showNowModal').modal('show');
+            var id = $(this).data('id');
+            var name = $(this).data('name');
+            var price = $(this).data('price');
+            var description = $(this).data('description');
+            var sold_out = $(this).data('sold');
+            var product_image = $(this).data('image');
 
+            console.log($(this).data('image'));
+
+            $('#product_id').val(id);
+            $('#product_name').text(name);
+            $('#product_price').text(price);
+            $('#product_desc').text(description);
+            $('#sold_out').text(sold_out);
+            document.getElementById("product_image").src = product_image;
+
+        })
+    })
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
@@ -579,7 +504,7 @@
     <?php if ($this->session->flashdata('flash_message') != "") : ?>
 
     <script type="text/javascript">
-        toastr.success('<?php echo $this->session->flashdata("flash_message"); ?>');
+    toastr.success('<?php echo $this->session->flashdata("flash_message"); ?>');
     </script>
 
     <?php endif; ?>
@@ -588,7 +513,7 @@
     <?php if ($this->session->flashdata('flash_error') != "") : ?>
 
     <script type="text/javascript">
-        toastr.error('<?php echo $this->session->flashdata("flash_error"); ?>');
+    toastr.error('<?php echo $this->session->flashdata("flash_error"); ?>');
     </script>
 
     <?php endif; ?>
@@ -597,26 +522,10 @@
     <?php if ($this->session->flashdata('flash_warning') != "") : ?>
 
     <script type="text/javascript">
-        toastr.warning('<?php echo $this->session->flashdata("flash_warning"); ?>');
+    toastr.warning('<?php echo $this->session->flashdata("flash_warning"); ?>');
     </script>
 
     <?php endif; ?>
-
-    <script>
-        const tel = document.getElementById('tel');
-
-        tel.addEventListener('input', function () {
-            let start = this.selectionStart;
-            let end = this.selectionEnd;
-
-            const current = this.value
-            const corrected = current.replace(/([^+0-9]+)/gi, '');
-            this.value = corrected;
-
-            if (corrected.length < current.length) --end;
-            this.setSelectionRange(start, end);
-        });
-    </script>
 
 
 </body>

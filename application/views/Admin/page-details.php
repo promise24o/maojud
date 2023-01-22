@@ -41,6 +41,10 @@
                                         <p>Selected Theme: <span class="item">
                                                 <?= $this->crud_model->getThemeName($page['theme']) ?></span>
                                         </p>
+                                        <p>Price (USD): $<span class="item"> <?= number_format($page['price'],2) ?></span>
+                                        </p>
+                                        <p>No. Sold Out: <span class="item"><?= $page['sold_out'] ?></span>
+                                        </p>
                                         <p>Created By: <span class="item"> <?= $page['created_by'] ?></span>
                                         </p>
                                         <p>Last Updated: <span class="item"> <?= $page['last_updated'] ?></span>
@@ -129,6 +133,14 @@
                                       <div class="form-group col-md-6">
                                           <label class="text-black font-w500">Landing Page Slug</label>
                                           <input required readonly type="text" id="slug" value="" class="form-control">
+                                      </div>
+                                      <div class="form-group col-md-6">
+                                          <label class="text-black font-w500">Product Price</label>
+                                          <input required type="number" value="<?= $page['price'] ?>"  placeholder="Price Amount (USD)"  name="price" class="form-control">
+                                      </div>
+                                      <div class="form-group col-md-6">
+                                          <label class="text-black font-w500">Sold Out</label>
+                                          <input required type="number" value="<?= $page['sold_out'] ?>"  placeholder="No. of Sold Out" name="sold_out" class="form-control">
                                       </div>
                                     </div>
                                 </div>

@@ -7,11 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?= base_url() ?>assets/landing/glow/index.css" />
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet">
     <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url() ?>assets/images/favicon.png">
     <title>Maoju Online Store <?= $page_title ?></title>
 </head>
 
-<body>
+<body style="background-color: #6865BF;">
     <header>
         <img width="100" class="heading" src="<?= base_url() ?>assets/images/favicon.png" alt="">
         <!-- <h1 class="heading">MAOJU <span>Online Store</span></h1> -->
@@ -48,8 +51,8 @@
                 <p class="section-one-paragraph">
                     <?= $firstProduct['description'] ?>
                 </p>
-                <button class="section-one-button">
-                    Get Started
+                <button data-bs-toggle="modal" data-bs-target="#buyNowModal" class="section-one-button">
+                    Buy Now
                 </button>
             </div>
 
@@ -174,7 +177,9 @@
                     <p class="section-four-right-paragraph">
                         <?= $seventhProduct['description'] ?>
                     </p>
-                    <button class="section-one-button">Get Started</button>
+                    <button data-bs-toggle="modal" data-bs-target="#buyNowModal" class="section-one-button">
+                        Buy Now
+                    </button>
                 </div>
             </section>
             <?php endforeach; ?>
@@ -184,39 +189,158 @@
                 </h2>
 
                 <hr class="section-five-contact-line-break">
-
-                <form class="section-five-form">
-
-                    <div class="section-five-contact-form">
-                        <div class="dota">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email">
+                <div class="container" style="padding:0 80px;">
+                    <form action="<?= base_url('send-message') ?>" method="post">
+                        <input name="slug" value="<?= $page['slug'] ?>" type="hidden" required />
+                        <input name="product" value="<?= $page['encrypted_id'] ?>" type="hidden" required />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Fullname</label>
+                                    <input type="text" class="form-control" name="contact_name" placeholder="Fullname"
+                                        required="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Phone</label>
+                                    <input type="text" class="form-control" name="contact_phone" placeholder="Phone No."
+                                        required="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Email</label>
+                                    <input type="text" class="form-control" name="contact_email"
+                                        placeholder="Email Address" required="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Subject</label>
+                                    <input type="text" class="form-control" name="contact_subject" placeholder="Subject"
+                                        required="">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <textarea type="text" class="form-control" name="contact_message"
+                                        placeholder="Enter Message Here" required="" rows="6" cols="400"></textarea>
+                                </div>
+                            </div>
                         </div>
-                        <div class="dota">
-                            <label for message>Message</label>
-                            <input type="text" id="message" name="meassage" class="special-input">
-                        </div>
-                    </div>
-
-                    <div class="section-five-contact-form">
-                        <div class="dota">
-                            <label for="tel">Phone Number</label>
-                            <input type="tel" id="tel" name="tel">
-                        </div>
-                        <div class="dota">
-                            <label for="address">Address</label>
-                            <input type="text" id="address" name="address">
-                        </div>
-                        <button class="section-one-button section-five-button">Get Started</button>
-                    </div>
-
-
-
-                </form>
+                        <button type="submit" class="section-one-button">Send Message</button>
+                    </form>
+                </div>
             </section>
+            <div class="modal fade" id="buyNowModal" tabindex="-1" aria-labelledby="buyNowModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="container mt-5 mb-5">
+                            <div class="d-flex justify-content-center row">
+                                <div class="col-md-12">
+                                    <div class="row p-2 bg-white border rounded">
+                                        <div class="col-md-3 mt-1"><img
+                                                class="img-fluid img-responsive rounded product-image"
+                                                src="<?= $this->crud_model->get_image_url('product', $firstProduct['id']) ?>">
+                                        </div>
+                                        <div class="col-md-6 mt-1">
+                                            <h5><?= $page['title'] ?></h5>
+                                            <p class="text-justify mb-0"><?= $firstProduct['description'] ?></p>
+                                            <form action="<?= base_url('confirm-order') ?>" method="post">
+                                                <input type="hidden" name="product_id"
+                                                    value="<?= $page['encrypted_id'] ?>" required="">
+                                                <input type="hidden" name="project"
+                                                    value="<?=  $this->config->item('site_project'); ?>" required>
+                                                    <div class="mb-3">
+                                                    <label for="" class="form-label">Fullname</label>
+                                                    <input type="text" class="form-control" name="fullname"
+                                                        placeholder="Fullname" required="">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="" class="form-label">Email</label>
+                                                    <input type="email" class="form-control" name="email"
+                                                        placeholder="Enter Email Address" required="">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label for="" class="form-label">Phone</label>
+                                                            <input type="number" class="form-control" name="phone"
+                                                                placeholder="Phone Number" required="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label for="" class="form-label">Quantity</label>
+                                                            <input type="number" class="form-control" name="qty"
+                                                                placeholder="Amount of Quantity" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
 
+
+                                                <button type="submit" class="btn btn-primary">Confirm Order</button>
+                                                <button data-bs-dismiss="modal"
+                                                    class="btn btn-outline-primary">Cancel</button>
+                                            </form>
+                                        </div>
+                                        <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                                            <div class="d-flex flex-row align-items-center">
+                                                <h4 class="mr-1">$<?= number_format($page['price'], 2) ?></h4>
+                                            </div>
+                                            <h6 class="text-success">Sold Out: <?= $page['sold_out'] ?></h6>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
     </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <!-- SHOW TOASTR NOTIFICATION -->
+    <?php if ($this->session->flashdata('flash_message') != "") : ?>
+
+    <script type="text/javascript">
+        toastr.success('<?php echo $this->session->flashdata("flash_message"); ?>');
+    </script>
+
+    <?php endif; ?>
+
+    <!-- SHOW TOASTR NOTIFICATION -->
+    <?php if ($this->session->flashdata('flash_error') != "") : ?>
+
+    <script type="text/javascript">
+        toastr.error('<?php echo $this->session->flashdata("flash_error"); ?>');
+    </script>
+
+    <?php endif; ?>
+
+    <!-- SHOW TOASTR NOTIFICATION -->
+    <?php if ($this->session->flashdata('flash_warning') != "") : ?>
+
+    <script type="text/javascript">
+        toastr.warning('<?php echo $this->session->flashdata("flash_warning"); ?>');
+    </script>
+
+    <?php endif; ?>
 
 </body>
 

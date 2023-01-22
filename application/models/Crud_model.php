@@ -101,12 +101,44 @@ class Crud_model extends CI_Model{
     public function getProductPrice($id){
         $this->db->where('encrypted_id', $id);
         $query = $this->db->get('products'); 
-        return $query->row()->price;
+        if($query->num_rows() > 0){
+            return $query->row()->price;
+        }
+
+        $this->db->where('encrypted_id', $id);
+        $query = $this->db->get('landing_pages'); 
+        if($query->num_rows() > 0){
+            return $query->row()->price;
+        }
+        
     }
     public function getProductName($id){
         $this->db->where('encrypted_id', $id);
         $query = $this->db->get('products'); 
-        return $query->row()->name;
+        if($query->num_rows() > 0){
+            return $query->row()->name;
+        }
+       
+        $this->db->where('encrypted_id', $id);
+        $query = $this->db->get('landing_pages'); 
+        if($query->num_rows() > 0){
+            return $query->row()->title;
+        }
+    }
+
+    public function getProductCode($id){
+        $this->db->where('encrypted_id', $id);
+        $query = $this->db->get('products'); 
+        if($query->num_rows() > 0){
+            return $query->row()->code;
+        }
+
+        $this->db->where('encrypted_id', $id);
+        $query = $this->db->get('landing_pages'); 
+        if($query->num_rows() > 0){
+            return $query->row()->code;
+        }
+        
     }
 
     public function getThreeProducts($id){
@@ -181,7 +213,15 @@ class Crud_model extends CI_Model{
     public function getPageIdByProduct($id){
         $this->db->where('encrypted_id', $id);
         $query = $this->db->get('products'); 
-        return $query->row()->landing_page;
+        if($query->num_rows() > 0){
+            return $query->row()->landing_page;
+        }
+        
+        $this->db->where('encrypted_id', $id);
+        $query = $this->db->get('landing_pages'); 
+        if($query->num_rows() > 0){
+            return $query->row()->encrypted_id;
+        }
     }
 
     public function getPageSlug($id){
@@ -269,6 +309,21 @@ class Crud_model extends CI_Model{
         $this->db->order_by('id', 'desc');
         $query = $this->db->get('categories'); 
         return $query->result_array();
+    }
+
+    public function getProductCategory($id){
+        $this->db->where('encrypted_id', $id); 
+        $query = $this->db->get('products'); 
+        if($query->num_rows() >  0){
+            return $query->row()->category;
+        }
+       
+        $this->db->where('encrypted_id', $id); 
+        $query = $this->db->get('landing_pages'); 
+        if($query->num_rows() >  0){
+            return $query->row()->category;
+        }
+       
     }
 
     public function getNoLandingPages($id){
@@ -367,5 +422,24 @@ class Crud_model extends CI_Model{
             }
         }
        
+    }
+
+    public function generateOrderNo(){
+        $this->db->order_by('id', 'desc');
+        $this->db->limit(1);
+        $order_no = $this->db->get('orders')->row()->order_id;
+        if($order_no){
+            return $order_no + 1;
+        }else{
+            return 100000;
+        }
+        
+    }
+
+    public function getProductStock($id)
+    {
+        $this->db->where('encrypted_id', $id);
+        $query = $this->db->get('products');
+        return $query->row()->stock_available;
     }
 }

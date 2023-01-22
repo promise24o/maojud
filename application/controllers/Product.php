@@ -18,6 +18,18 @@ class Product extends CI_Controller
 		$this->load->view($theme, $data);
 	}
 
+	public function update_dates(){ 
+		$orders = $this->db->get('orders')->result_array(); 
+		$dates = "";
+		foreach($orders as $order){
+			$this->db->where('id', $order['id']); 
+			$this->db->update('orders', array('date2' => date('Y-m-d', strtotime(strtok($order['date'], '|')))));
+		}
+
+		$this->session->set_flashdata('flash_message', 'Updated Successfully');
+		redirect(base_url());
+	}
+
 	public  function test(){
 		$this->load->view('Hero/hero7');
 	}
@@ -32,13 +44,32 @@ class Product extends CI_Controller
 		$qty		=	$this->input->post('qty');
 
 		$data['encrypted_id']	=	random_string('alnum', 100);
+		$data['order_id']		=	$this->crud_model->generateOrderNo();
 		$data['fullname']		=	$this->input->post('fullname');
 		$data['email']			=	$this->input->post('email');
 		$data['phone']			=	$this->input->post('phone');
+		$data['project']		=	$this->input->post('project');
+		$data['address']		=	$this->input->post('address');
+		$data['color']			=	$this->input->post('color');
+		$data['size']			=	$this->input->post('size');
 		$data['product']		=	$product_id;
+		$data['category']		=	$this->crud_model->getProductCategory($product_id);
 		$data['qty']			=	$qty;
+		$data['date2']			=	date('Y-m-d');
 		$data['date']			=	date('F jS, Y | h:i:A');
 		$data['amount']			=	$qty * $price;
+
+		//Reduce Qty of Item Available
+		$stock = $this->crud_model->getProductStock($product_id);
+		$new_stock = $stock - $qty; 
+
+		//Update Stock Available 
+		$this->db->where('landing_page', $page);
+		$products = $this->db->get('products')->result_array(); 
+		foreach($products as $product){
+			$this->db->where('landing_page', $product['landing_page']);
+			$this->db->update('products', array('stock_available' => $new_stock));
+		}
 
 		$this->db->insert('orders', $data);
 

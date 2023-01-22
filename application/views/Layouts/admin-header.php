@@ -109,11 +109,11 @@
                             <span class="nav-text">Create Hero Page</span>
                         </a>                        
                     </li>
-                    <li><a class="ai-icon" href="<?= base_url('admin/orders') ?>" aria-expanded="false">
+                    <!-- <li><a class="ai-icon" href="<?= base_url('admin/orders') ?>" aria-expanded="false">
                             <i class="flaticon-381-file-1"></i>
                             <span class="nav-text">View Orders</span>
                         </a>                        
-                    </li>
+                    </li> -->
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-381-folder-13"></i>
 							<span class="nav-text">Emails</span>

@@ -20,9 +20,13 @@
                           <form method="POST" action="<?= base_url('admin/confirm_create') ?>" enctype="multipart/form-data">
                               <div class="title">
                                   <div class="row shadow p-3 mb-5 bg-white rounded ">
-                                      <div class="form-group col-md-12">
+                                      <div class="form-group col-md-6">
                                           <label class="text-black font-w500">Landing Page Title</label>
-                                          <input required id="hero_title" name="hero_title" type="text" class="form-control">
+                                          <input required id="landing_title" name="landing_title" type="text" class="form-control">
+                                      </div>
+                                      <div class="form-group col-md-6">
+                                          <label class="text-black font-w500">Landing Page Code</label>
+                                          <input required name="code" placeholder="Landing Page Code" type="text" class="form-control">
                                       </div>
 
                                       <div class="form-group col-md-2">
@@ -81,6 +85,14 @@
                                           <label class="text-black font-w500">Landing Page Slug</label>
                                           <input required readonly type="text" id="slug" value="" class="form-control">
                                       </div>
+                                      <div class="form-group col-md-6">
+                                          <label class="text-black font-w500">Product Price</label>
+                                          <input required type="number" placeholder="Price Amount (USD)"  name="price" class="form-control">
+                                      </div>
+                                      <div class="form-group col-md-6">
+                                          <label class="text-black font-w500">Sold Out</label>
+                                          <input required type="number"  placeholder="No. of Sold Out" name="sold_out" class="form-control">
+                                      </div>
                                   </div>
                               </div>
 
@@ -101,7 +113,7 @@
                                               <input required type="file" accept="image/png" name="userfile[]" class="custom-file-input">
                                               <label class="custom-file-label">Choose Product Image</label>
                                           </div>
-                                          <span class="fs-12 font-w600">Product Image Size should be exactly 174px X 129px</span>
+                                          <span class="fs-12 font-w600">Product Image Size should not be less than 350px X 703px</span>
                                       </div>
                                   </div>
                               </div>
@@ -122,7 +134,7 @@
                                               <input required type="file" accept="image/png" name="userfile[]" class="custom-file-input">
                                               <label class="custom-file-label">Choose Product Image</label>
                                           </div>
-                                          <span class="fs-12 font-w600">Product Image Size should be exactly 175px X 129px</span>
+                                          <span class="fs-12 font-w600">Product Image Size should not be less than 175px X 129px</span>
                                       </div>
                                   </div>
                               </div>
@@ -143,7 +155,7 @@
                                               <input required type="file" accept="image/png" name="userfile[]" class="custom-file-input">
                                               <label class="custom-file-label">Choose Product Image</label>
                                           </div>
-                                          <span class="fs-12 font-w600">Product Image Size should be exactly 175px X 129px</span>
+                                          <span class="fs-12 font-w600">Product Image Size should not be less than 175px X 129px</span>
                                       </div>
                                   </div>
                               </div>
@@ -164,7 +176,7 @@
                                               <input required type="file" accept="image/png" name="userfile[]" class="custom-file-input">
                                               <label class="custom-file-label">Choose Product Image</label>
                                           </div>
-                                          <span class="fs-12 font-w600">Product Image Size should be exactly 175px X 129px</span>
+                                          <span class="fs-12 font-w600">Product Image Size should not be less than 175px X 129px</span>
                                       </div>
                                   </div>
                               </div>
@@ -185,7 +197,7 @@
                                               <input required type="file" accept="image/png" name="userfile[]" class="custom-file-input">
                                               <label class="custom-file-label">Choose Product Image</label>
                                           </div>
-                                          <span class="fs-12 font-w600">Product Image Size should be exactly 500px X 563px</span>
+                                          <span class="fs-12 font-w600">Product Image Size should not be less than 500px X 563px</span>
                                       </div>
                                   </div>
                               </div>
@@ -206,7 +218,7 @@
                                               <input required type="file" accept="image/png" name="userfile[]" class="custom-file-input">
                                               <label class="custom-file-label">Choose Product Image</label>
                                           </div>
-                                          <span class="fs-12 font-w600">Product Image Size should be exactly 734px X 700px</span>
+                                          <span class="fs-12 font-w600">Product Image Size should not be less than 734px X 700px</span>
                                       </div>
                                   </div>
                               </div>
@@ -227,7 +239,7 @@
                                               <input required type="file" accept="image/png" name="userfile[]" class="custom-file-input">
                                               <label class="custom-file-label">Choose Product Image</label>
                                           </div>
-                                          <span class="fs-12 font-w600">Product Image Size should be exactly 819px X 460px</span>
+                                          <span class="fs-12 font-w600">Product Image Size should not be less than 819px X 460px</span>
                                       </div>
                                   </div>
                               </div>

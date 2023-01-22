@@ -116,6 +116,14 @@
                                                 Hero Theme 2</option>
                                                 <option <?php if($page['theme'] == 3){echo "selected"; } ?> value="3">
                                                 Hero Theme 3</option>
+                                                <option <?php if($page['theme'] == 4){echo "selected"; } ?> value="4">
+                                                Hero Theme 4</option>
+                                                <option <?php if($page['theme'] == 5){echo "selected"; } ?> value="5">
+                                                Hero Theme 5</option>
+                                                <option <?php if($page['theme'] == 6){echo "selected"; } ?> value="6">
+                                                Hero Theme 6</option>
+                                                <option <?php if($page['theme'] == 7){echo "selected"; } ?> value="7">
+                                                Hero Theme 7</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-6">

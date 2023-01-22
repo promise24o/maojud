@@ -180,7 +180,7 @@ class Admin extends CI_Controller
 
         $config = array(
             array(
-                'field' => 'title',
+                'field' => 'landing_title',
                 'label' => 'Landing Page Title',
                 'rules' => 'required|is_unique[landing_pages.title]'
             ),
@@ -205,6 +205,9 @@ class Admin extends CI_Controller
             $landing_cat            =   $this->input->post('category');
             $landing_page_id        =   random_string('alnum', 100);
             $data['title']          =   $this->input->post('landing_title'); 
+            $data['price']          =   $this->input->post('price'); 
+            $data['sold_out']       =   $this->input->post('sold_out'); 
+            $data['code']           =   $this->input->post('code');
             $data['category']       =    $landing_cat;
             $data['slug']           =    str_replace(' ', '-', strtolower(trim($this->input->post('landing_title')))); 
             $data['encrypted_id']   =   $landing_page_id; 
@@ -220,56 +223,56 @@ class Admin extends CI_Controller
                         $filename = $_FILES['userfile']['tmp_name'][$n];
                         $width = $this->checkImgWidth($filename);
                         $height = $this->checkImgHeight($filename);
-                        if($width != 358 && $height != 711){
-                            $error[] = "Product One Image Size should be Width:350px and Height:703px";
+                        if($width < 350 && $height < 700){
+                            $error[] = "Section One Image Size should not be  less than  Width:350px and Height:703px";
                         }
                     }
                     if($n == 1){
                         $filename = $_FILES['userfile']['tmp_name'][$n];
                         $width = $this->checkImgWidth($filename);
                         $height = $this->checkImgHeight($filename);
-                        if($width != 175 && $height != 129){
-                            $error[] = "Product Two Image Size should be Width:175px and Height:129px";
+                        if($width < 175 && $height < 129){
+                            $error[] = "Section Two Image Size should not be  less than  Width:175px and Height:129px";
                         }
                     }
                     if($n == 2){
                         $filename = $_FILES['userfile']['tmp_name'][$n];
                         $width = $this->checkImgWidth($filename);
                         $height = $this->checkImgHeight($filename);
-                        if($width != 175 && $height != 129){
-                            $error[] = "Product Three Image Size should be Width:175px and Height:129px";
+                        if($width < 175 && $height < 129){
+                            $error[] = "Section Three Image Size should not be  less than  Width:175px and Height:129px";
                         }
                     }
                     if($n == 3){
                         $filename = $_FILES['userfile']['tmp_name'][$n];
                         $width = $this->checkImgWidth($filename);
                         $height = $this->checkImgHeight($filename);
-                        if($width != 175 && $height != 129){
-                            $error[] = "Product Four Image Size should be Width:175px and Height:129px";
+                        if($width < 175 && $height < 129){
+                            $error[] = "Section Four Image Size should not be  less than  Width:175px and Height:129px";
                         }
                     }
                     if($n == 4){
                         $filename = $_FILES['userfile']['tmp_name'][$n];
                         $width = $this->checkImgWidth($filename);
                         $height = $this->checkImgHeight($filename);
-                        if($width != 500 && $height != 563 ){
-                            $error[] = "Product Five Image Size should be Width:500px and Height:563px";
+                        if($width < 500 && $height < 563 ){
+                            $error[] = "Section Five Image Size should not be  less than  Width:500px and Height:563px";
                         }
                     }
                     if($n == 5){
                         $filename = $_FILES['userfile']['tmp_name'][$n];
                         $width = $this->checkImgWidth($filename);
                         $height = $this->checkImgHeight($filename);
-                        if($width != 734 && $height != 700){
-                            $error[] = "Product Six Image Size should be Width:734px and Height:700px";
+                        if($width < 734 && $height < 700){
+                            $error[] = "Section Six Image Size should not be  less than  Width:734px and Height:700px";
                         }
                     }
                     if($n == 6){
                         $filename = $_FILES['userfile']['tmp_name'][$n];
                         $width = $this->checkImgWidth($filename);
                         $height = $this->checkImgHeight($filename);
-                        if($width != 819 && $height != 460){
-                            $error[] = "Product Seven Image Size should be Width:819px and Height:460px";
+                        if($width < 819 && $height < 460){
+                            $error[] = "Section Seven Image Size should not be  less than  Width:819px and Height:460px";
                         }
                     }
                
@@ -337,13 +340,13 @@ class Admin extends CI_Controller
         $this->form_validation->set_rules($config);
         if ($this->form_validation->run()) {
 
-            $filename = $_FILES['userfile']['tmp_name'];
-            $width = $this->checkImgWidth($filename);
-            $height = $this->checkImgHeight($filename);
-            if($width < 661 && $height < 661){
-                $this->session->set_flashdata('flash_error', 'Product Image Size should be Width:661px and Height: 661px');
-                redirect(base_url('admin/create_hero_page'));
-            }
+            // $filename = $_FILES['userfile']['tmp_name'];
+            // $width = $this->checkImgWidth($filename);
+            // $height = $this->checkImgHeight($filename);
+            // if($width < 661 && $height < 661){
+            //     $this->session->set_flashdata('flash_error', 'Product Image Size should not be  less than  Width:661px and Height: 661px');
+            //     redirect(base_url('admin/create_hero_page'));
+            // }
 
             $landing_page_id        =   random_string('alnum', 100);
             $hero_cat               =   $this->input->post('hero_category'); 
@@ -353,6 +356,7 @@ class Admin extends CI_Controller
             $data['encrypted_id']   =   $landing_page_id; 
             $data['created_by']     =   $this->session->userdata('admin_name');
             $data['last_updated']   =   date('F jS, Y | h:i:A');
+            $data['images']         =   count($_FILES['userfile']['tmp_name']);
             $data['theme']          =   $this->input->post('hero_theme');
 
             //Insert Hero Page 
@@ -372,9 +376,11 @@ class Admin extends CI_Controller
             $this->db->insert('products', $data2); 
             $insert_id = $this->db->insert_id();
 
-          
-
-            move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/product_image/'.$insert_id.'.jpg');
+            for ($n = 0; $n < count($_FILES['userfile']['tmp_name']); $n++) { 
+                $product_id=$insert_id.'_'.$n;
+                move_uploaded_file($_FILES['userfile']['tmp_name'][$n], 'uploads/product_image/' . $product_id . '.jpg'
+                ); 
+            }    
 
             $this->session->set_flashdata('flash_message', 'Hero Page Created Successfully');
             redirect(base_url('admin/create_hero_page'));
@@ -464,6 +470,8 @@ class Admin extends CI_Controller
 
         $landing_cat            =   $this->input->post('category'); 
         $data['title']          =   $this->input->post('landing_title'); 
+        $data['price']          =   $this->input->post('price'); 
+        $data['sold_out']          =   $this->input->post('sold_out'); 
         $data['category']       =   $landing_cat;
         $data['slug']           =    str_replace(' ', '-', strtolower(trim($this->input->post('landing_title')))); 
         $data['last_updated']   =   date('F jS, Y | h:i:A');
