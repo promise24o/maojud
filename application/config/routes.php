@@ -51,6 +51,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller']    = 'auth';
 $route['confirm-login']         = 'auth/confirm_login';
+$route['confirm-order']         = 'product/confirm_order';
+$route['send-message']          = 'product/send_message';
 $route['logout']                = 'auth/logout';
 $route['(:any)']        = 'product/index/$1';
 $route['404_override'] = '';

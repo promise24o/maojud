@@ -24,7 +24,15 @@
                                   <div role="tabpanel" class="tab-pane fade <?php if ($count == 1) { echo "active show"; } ?>" id="product<?= $product['id'] ?>">
                                         <img class="img-fluid" src="<?= $this->crud_model->get_image_url('product', $product['id']) ?>" alt="">
                                      
-                                        <h4 class="mt-2"><?= $product['name'] ?></h4>
+                                        <h4 class="mt-2"><?= $product['name']." (".$product['code'].")" ?></h4>
+                                        <div class="content d-flex">
+                                            <div class="price mr-4">
+                                                <h4>Price: $<strong><?= number_format($product['price'],2) ?></strong></h4>
+                                            </div>
+                                            <div class="price">
+                                                <h4>Sold Out: <strong><?= number_format($product['sold_out'],2) ?></strong></h4>
+                                            </div>
+                                        </div>
                                         <p class="text-content mt-4"><?=  $product['description'] ?></p>
                                     </div>
                                     <?php endforeach; ?>
@@ -146,13 +154,25 @@
                                             <textarea required type="text" name="desc"
                                                 class="form-control"><?= $product['description'] ?></textarea>
                                         </div>
-                                        <div class="form-group input-group col-md-12">
+                                        <div class="form-group input-group col-md-6">
                                             <div class="custom-file">
                                                 <input type="file" accept="image/png,  image/jpeg" name="userfile"
                                                     class="custom-file-input">
                                                 <label class="custom-file-label">Choose file</label>
                                             </div>
                                         </div>
+                                        <div class="form-group col-md-6">
+                                          <label class="text-black font-w500">Product Code</label>
+                                          <input required name="code" value="<?= $product['code']; ?>" type="text" class="form-control">
+                                      </div>
+                                        <div class="form-group col-md-6">
+                                          <label class="text-black font-w500">Product Price (USD)</label>
+                                          <input required step="0.1"  type="number" value="<?= $product['price'] ?>" name="price"  class="form-control">
+                                      </div>    
+                                      <div class="form-group col-md-6">
+                                          <label class="text-black font-w500">Sold Out</label>
+                                          <input required  type="number" value="<?= $product['sold_out'] ?>"  name="sold_out" class="form-control">
+                                      </div>
                                         <input value="<?= $product['id'] ?>" name="id" type="hidden"
                                             class="form-control">
                                     </div>

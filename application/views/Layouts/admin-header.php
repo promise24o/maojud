@@ -34,7 +34,7 @@
     <div id="main-wrapper">
 
         <div class="nav-header">
-            <a href="index.html" class="brand-logo">
+            <a href="<?= base_url('admin/dashboard') ?>" class="brand-logo">
                 <img class="logo-abbr" src="<?= base_url() ?>assets/images/favicon.png" alt="">
                 <img class="logo-compact" src="<?= base_url() ?>assets/images/favicon.png" alt="">
                 <img class="brand-title" src="<?= base_url() ?>assets/images/logo-text.png" alt="">
@@ -108,6 +108,20 @@
                             <i class="flaticon-381-file-1"></i>
                             <span class="nav-text">Create Hero Page</span>
                         </a>                        
+                    </li>
+                    <li><a class="ai-icon" href="<?= base_url('admin/orders') ?>" aria-expanded="false">
+                            <i class="flaticon-381-file-1"></i>
+                            <span class="nav-text">View Orders</span>
+                        </a>                        
+                    </li>
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+							<i class="flaticon-381-folder-13"></i>
+							<span class="nav-text">Emails</span>
+						</a>
+                        <ul aria-expanded="false" class="mm-collapse">
+                            <li><a href="<?= base_url('admin/compose') ?>">Compose</a></li>
+                            <li><a href="<?= base_url('admin/inbox') ?>">Inbox</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>

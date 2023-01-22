@@ -98,6 +98,17 @@ class Crud_model extends CI_Model{
         return $query->result_array();
     }
 
+    public function getProductPrice($id){
+        $this->db->where('encrypted_id', $id);
+        $query = $this->db->get('products'); 
+        return $query->row()->price;
+    }
+    public function getProductName($id){
+        $this->db->where('encrypted_id', $id);
+        $query = $this->db->get('products'); 
+        return $query->row()->name;
+    }
+
     public function getThreeProducts($id){
         // $this->db->order_by('id', 'desc');
         $this->db->where('landing_page', $id);
@@ -153,6 +164,49 @@ class Crud_model extends CI_Model{
         return $query->row_array();
     }
 
+    public function getPageCategory($id){
+        $this->db->where('encrypted_id', $id);
+        $query = $this->db->get('landing_pages'); 
+        if($query->num_rows() >0){
+            return $query->row()->category;
+        }
+
+        $this->db->where('encrypted_id', $id);
+        $query = $this->db->get('hero_pages'); 
+        if($query->num_rows() >0){
+            return $query->row()->category;
+        }
+    }
+
+    public function getPageIdByProduct($id){
+        $this->db->where('encrypted_id', $id);
+        $query = $this->db->get('products'); 
+        return $query->row()->landing_page;
+    }
+
+    public function getPageSlug($id){
+        $this->db->where('encrypted_id', $id);
+        $query = $this->db->get('landing_pages'); 
+        if($query->num_rows() >0){
+            return $query->row()->slug;
+        }
+
+        $this->db->where('encrypted_id', $id);
+        $query = $this->db->get('hero_pages'); 
+        if($query->num_rows() >0){
+            return $query->row()->slug;
+        }
+    }
+
+    public function getHeroSimilarProducts($id){
+        $cat = $this->getPageCategory($id);
+        $this->db->where('category', $cat);
+        $this->db->where('type', 'hero');
+        $this->db->order_by('id', 'RANDOM');
+        $query = $this->db->get('products');
+        return $query->result_array(); 
+    }
+
     public function getFirstProduct($id){
         // $this->db->order_by('id', 'desc');
         $this->db->limit(1);
@@ -166,9 +220,49 @@ class Crud_model extends CI_Model{
         return $query->num_rows();
     }
 
+    public function countEmails(){
+        $query = $this->db->get('messages'); 
+        return $query->num_rows();
+    }
+
+    public function changeEmailStatus($id){
+        $this->db->where('encrypted_id', $id);
+        $query = $this->db->update('messages', array('status' => 1)); 
+    }
+
+    public function countUndreadEmails(){
+        $this->db->where('status', 0);
+        $query = $this->db->get('messages'); 
+        return $query->num_rows();
+    }
+
     public function getTotalAdmin(){
         $query = $this->db->get('admin'); 
         return $query->num_rows();
+    }
+
+    public function getCategoryName($id){
+        $this->db->where('encrypted_id', $id);
+        $query = $this->db->get('categories'); 
+        return $query->row()->name;
+    }
+
+    public function getOrders(){
+        $this->db->order_by('id', 'desc');
+        $query = $this->db->get('orders'); 
+        return $query->result_array();
+    }
+
+    public function getAllMessages(){
+        $this->db->order_by('id', 'desc');
+        $query = $this->db->get('messages'); 
+        return $query->result_array();
+    }
+
+    public function getMessage($id){
+        $this->db->where('encrypted_id', $id);
+        $query = $this->db->get('messages'); 
+        return $query->row_array();
     }
 
     public function getAllCategories(){
@@ -194,14 +288,27 @@ class Crud_model extends CI_Model{
         return $query->num_rows();
     }
 
+    public function getTotalHeroPages(){
+        $query = $this->db->get('hero_pages'); 
+        return $query->num_rows();
+    }
+
     public function getHeroThemeName($id){
         $name = "";
         if($id == 1){
             return $name = "Hero Theme 1";
         }elseif($id == 2){
             return $name = "Hero Theme 2";
-        }else{
+        }elseif($id == 3){
             return $name = "Hero Theme 3";
+        }elseif($id == 4){
+            return $name = "Hero Theme 4";
+        }elseif($id == 5){
+            return $name = "Hero Theme 5";
+        }elseif($id == 6){
+            return $name = "Hero Theme 6";
+        }else{
+            return $name = "Hero Theme 7";
         }
     }
 
@@ -247,8 +354,16 @@ class Crud_model extends CI_Model{
                 return 'Hero/hero1';
             }elseif($query == 2){
                 return 'Hero/hero2';
-            }else{
+            }elseif($query == 3){
                 return 'Hero/hero3';
+            }elseif($query == 4){
+                return 'Hero/hero4';
+            }elseif($query == 5){
+                return 'Hero/hero5';
+            }elseif($query == 6){
+                return 'Hero/hero6';
+            }else{
+                return 'Hero/hero7';
             }
         }
        

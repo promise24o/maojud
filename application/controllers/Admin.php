@@ -28,6 +28,51 @@ class Admin extends CI_Controller
 		$this->load->view('Layouts/admin-footer');
 	}
 
+	public function compose()
+	{
+        if ($this->session->userdata('admin_login') != TRUE)
+			redirect(base_url(), 'refresh');
+
+		$data['page_title']  = "Compose Message";
+		$this->load->view('Layouts/admin-header', $data);
+		$this->load->view('Admin/compose');
+		$this->load->view('Layouts/admin-footer');
+	}
+
+
+	public function inbox()
+	{
+        if ($this->session->userdata('admin_login') != TRUE)
+			redirect(base_url(), 'refresh');
+
+		$data['page_title']  = "Customers Messages";
+        $data['messages']     = $this->crud_model->getAllMessages();
+
+		$this->load->view('Layouts/admin-header', $data);
+		$this->load->view('Admin/inbox');
+		$this->load->view('Layouts/admin-footer');
+	}
+
+
+	public function view_message($id = "")
+	{
+        if ($this->session->userdata('admin_login') != TRUE)
+			redirect(base_url(), 'refresh');
+
+        if($id == ""){
+            $this->session->set_flashdata('flash_error', 'An Error has Occured');
+            redirect(base_url('admin/dashboard')); 
+        }
+
+        $this->crud_model->changeEmailStatus($id);
+
+		$data['page_title']  = "Customers Messages";
+        $data['message']     = $this->crud_model->getMessage($id);
+
+		$this->load->view('Layouts/admin-header', $data);
+		$this->load->view('Admin/view_message');
+		$this->load->view('Layouts/admin-footer');
+	}
 
 	public function categories()
 	{
@@ -49,6 +94,19 @@ class Admin extends CI_Controller
 		$data['page_title']  = "Hero Page Builder";
 		$this->load->view('Layouts/admin-header', $data);
 		$this->load->view('Admin/create-hero-page');
+		$this->load->view('Layouts/admin-footer');
+	}
+
+	public function orders()
+	{
+        if ($this->session->userdata('admin_login') != TRUE)
+			redirect(base_url(), 'refresh');
+
+		$data['page_title']  = "Product Orders";
+        $data['orders']     =   $this->crud_model->getOrders();
+        
+		$this->load->view('Layouts/admin-header', $data);
+		$this->load->view('Admin/orders');
 		$this->load->view('Layouts/admin-footer');
 	}
 
@@ -144,9 +202,10 @@ class Admin extends CI_Controller
         );
         $this->form_validation->set_rules($config);
         if ($this->form_validation->run()) {
+            $landing_cat            =   $this->input->post('category');
             $landing_page_id        =   random_string('alnum', 100);
             $data['title']          =   $this->input->post('landing_title'); 
-            $data['category']       =   $this->input->post('category'); 
+            $data['category']       =    $landing_cat;
             $data['slug']           =    str_replace(' ', '-', strtolower(trim($this->input->post('landing_title')))); 
             $data['encrypted_id']   =   $landing_page_id; 
             $data['created_by']     =   $this->session->userdata('admin_name');
@@ -226,7 +285,7 @@ class Admin extends CI_Controller
             $result=array();
             $post = $this->input->post();
             for ($i = 0; $i < count($post['name']); $i++) {
-                $arr = array( 'name' => $post['name'][$i], 'description' => $post['desc'][$i], 'encrypted_id' => random_string('alnum', 100), 'landing_page' => $landing_page_id, 'date_created' => date('F jS, Y | h:i:A') );
+                $arr = array( 'name' => $post['name'][$i], 'category' => $landing_cat , 'type' => 'landing' , 'description' => $post['desc'][$i], 'encrypted_id' => random_string('alnum', 100), 'landing_page' => $landing_page_id, 'date_created' => date('F jS, Y | h:i:A') );
                 $this->db->insert('products', $arr);
                 $result[]=$this->db->insert_id();
             }
@@ -277,9 +336,19 @@ class Admin extends CI_Controller
         );
         $this->form_validation->set_rules($config);
         if ($this->form_validation->run()) {
+
+            $filename = $_FILES['userfile']['tmp_name'];
+            $width = $this->checkImgWidth($filename);
+            $height = $this->checkImgHeight($filename);
+            if($width < 661 && $height < 661){
+                $this->session->set_flashdata('flash_error', 'Product Image Size should be Width:661px and Height: 661px');
+                redirect(base_url('admin/create_hero_page'));
+            }
+
             $landing_page_id        =   random_string('alnum', 100);
+            $hero_cat               =   $this->input->post('hero_category'); 
             $data['title']          =   $this->input->post('hero_title'); 
-            $data['category']       =   $this->input->post('hero_category'); 
+            $data['category']       =   $hero_cat;
             $data['slug']           =    str_replace(' ', '-', strtolower(trim($this->input->post('hero_title')))); 
             $data['encrypted_id']   =   $landing_page_id; 
             $data['created_by']     =   $this->session->userdata('admin_name');
@@ -290,13 +359,20 @@ class Admin extends CI_Controller
             $this->db->insert('hero_pages', $data);
             
             $data2['encrypted_id']     =   random_string('alnum', 100);
+            $data2['category']          =   $hero_cat;
+            $data2['type']          =   'hero';
             $data2['name']           =   $this->input->post('name');
+            $data2['code']          =   $this->input->post('code');
+            $data2['price']           =   $this->input->post('price');
+            $data2['sold_out']           =   $this->input->post('sold_out');
             $data2['landing_page']   =   $landing_page_id;
             $data2['description']   =   $this->input->post('desc');
 
             //Insert Landing Page 
             $this->db->insert('products', $data2); 
             $insert_id = $this->db->insert_id();
+
+          
 
             move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/product_image/'.$insert_id.'.jpg');
 
@@ -321,9 +397,9 @@ class Admin extends CI_Controller
             $this->session->set_flashdata('flash_error', 'An Error has Occured');
             redirect(base_url('admin/dashboard')); 
         }
-
+            $hero_cat               =   $this->input->post('category'); 
             $data['title']          =   $this->input->post('hero_title'); 
-            $data['category']       =   $this->input->post('category'); 
+            $data['category']       =   $hero_cat; 
             $data['slug']           =    str_replace(' ', '-', strtolower(trim($this->input->post('hero_title')))); 
             $data['created_by']     =   $this->session->userdata('admin_name');
             $data['last_updated']   =   date('F jS, Y | h:i:A');
@@ -334,8 +410,13 @@ class Admin extends CI_Controller
             $this->db->update('hero_pages', $data);
             
             $product_id             =   $this->input->post('id');
+            $data2['category']      =   $hero_cat;
+            $data2['type']          =   'hero';
             $data2['name']          =   $this->input->post('name');
+            $data2['code']          =   $this->input->post('code');
             $data2['description']   =   $this->input->post('desc');
+            $data2['price']         =   $this->input->post('price');
+            $data2['sold_out']      =   $this->input->post('sold_out');
 
             //Insert Product 
             $this->db->where('id', $product_id);
@@ -364,8 +445,8 @@ class Admin extends CI_Controller
 
     public function check_desc($str)
     {
-        if (strlen($str) > 400){
-            $this->form_validation->set_message('check_desc', 'The {field} field can not have more than 300 characters');
+        if (strlen($str) > 500){
+            $this->form_validation->set_message('check_desc', 'The {field} field can not have more than 500 characters');
             return FALSE;
         } else {
             return TRUE;
@@ -381,9 +462,9 @@ class Admin extends CI_Controller
             redirect(base_url('admin/dashboard')); 
         }
 
-
+        $landing_cat            =   $this->input->post('category'); 
         $data['title']          =   $this->input->post('landing_title'); 
-        $data['category']       =   $this->input->post('category'); 
+        $data['category']       =   $landing_cat;
         $data['slug']           =    str_replace(' ', '-', strtolower(trim($this->input->post('landing_title')))); 
         $data['last_updated']   =   date('F jS, Y | h:i:A');
         $data['theme']          =   $this->input->post('theme');
@@ -396,7 +477,7 @@ class Admin extends CI_Controller
        
         $post = $this->input->post();
         for ($i = 0; $i < count($post['name']); $i++) {
-            $arr = array( 'name' => $post['name'][$i], 'description' => $post['desc'][$i], 'date_created' => date('F jS, Y | h:i:A') );
+            $arr = array( 'name' => $post['name'][$i], 'category' => $landing_cat , 'type' => 'landing' , 'description' => $post['desc'][$i], 'date_created' => date('F jS, Y | h:i:A') );
             $result[]= $post['id'][$i];
             $this->db->where('id', $result[$i]);
             $this->db->update('products', $arr);

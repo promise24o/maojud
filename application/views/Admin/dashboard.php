@@ -23,7 +23,7 @@
                             <div class="card-body">
                                 <div class="media align-items-center">
                                     <div class="media-body mr-3">
-                                        <h2 class="num-text text-black font-w600"><?= $this->crud_model->getTotalLandingPages(); ?></h2>
+                                        <h2 class="num-text text-black font-w600"><?= $this->crud_model->getTotalHeroPages(); ?></h2>
                                         <span class="fs-14">Total Hero Pages</span>
                                     </div>
                                     <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
